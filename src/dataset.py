@@ -2,8 +2,8 @@ import torch
 from torch.utils.data import Dataset
 from collections import Counter
 from torch.nn.utils.rnn import pad_sequence
-PADDING_VALUE = 0
-UNK_VALUE = 1
+PADDING_VALUE = 1
+UNK_VALUE = 0
 
 
 def split_train_val_test(df, props=[.8, .1, .1], shuffle=False):
@@ -41,11 +41,12 @@ def generate_vocab_map(df, cutoff=2):
 
 class HeadlineDataset(Dataset):
 
-    def __init__(self, vocab, df, max_length=50, use_elmo=False):
+    def __init__(self, vocab, df, max_length=50, use_elmo=False, tokenizer=None):
         self.vocab = vocab
         self.df = df
         self.max_length = max_length
         self.use_elmo = use_elmo
+        self.tokenizer = tokenizer
     
     def __len__(self):
         return len(self.df)
@@ -57,8 +58,11 @@ class HeadlineDataset(Dataset):
         if not self.use_elmo:
             sentence = frame["tokenized"][:self.max_length]
             unk_id = self.vocab["UNK"]
-            word_tensor = [self.vocab.get(word, unk_id) for word in sentence]
-            tokenized_word_tensor = torch.LongTensor(word_tensor)
+            if self.tokenizer is not None:
+                tokenized_word_tensor = self.tokenizer(" ".join(sentence))["input_ids"]
+            else:
+                word_tensor = [self.vocab.get(word, unk_id) for word in sentence]
+                tokenized_word_tensor = torch.LongTensor(word_tensor)
             return tokenized_word_tensor, curr_label
         else:
             return sentence, curr_label
