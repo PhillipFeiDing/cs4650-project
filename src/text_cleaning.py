@@ -63,8 +63,7 @@ def transcription_heart(text):
     return heart.sub(r'HEART', text)
 
 def clean_text(text):
-    # Remove non text
-    text = remove_punctuation(text)
+    # remove non text
     text = remove_URL(text)
     text = remove_HTML(text)
     text = remove_not_ASCII(text)
@@ -74,10 +73,13 @@ def clean_text(text):
     text = remove_mention(text)
     text = remove_number(text)
     
-    # Remove emojis / smileys
+    # remove emojis / smileys
     text = remove_emoji(text)
     text = transcription_sad(text)
     text = transcription_smile(text)
     text = transcription_heart(text)
+    
+    # remove punctuations
+    text = remove_punctuation(text)
   
     return text
