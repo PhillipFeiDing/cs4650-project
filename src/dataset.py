@@ -59,10 +59,10 @@ class HeadlineDataset(Dataset):
             sentence = frame["tokenized"][:self.max_length]
             unk_id = self.vocab["UNK"]
             if self.tokenizer is not None:
-                tokenized_word_tensor = self.tokenizer(" ".join(sentence))["input_ids"]
+                word_tensor = self.tokenizer(" ".join(sentence))["input_ids"]
             else:
                 word_tensor = [self.vocab.get(word, unk_id) for word in sentence]
-                tokenized_word_tensor = torch.LongTensor(word_tensor)
+            tokenized_word_tensor = torch.LongTensor(word_tensor)
             return tokenized_word_tensor, curr_label
         else:
             return sentence, curr_label
