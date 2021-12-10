@@ -2,7 +2,7 @@
 The code repository for our CS4650 course project: Disaster Tweet prediction.
 
 ## ML-models
-
+- All models are located under `ml-models/Traditional ML Method.ipynb`.
 
 ## NN-models
 - The dataset can be found under `nn-models/data`.
