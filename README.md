@@ -3,6 +3,7 @@ The code repository for our CS4650 course project: Disaster Tweet prediction.
 
 ## ML-models
 - All models are located under `ml-models/Traditional ML Method.ipynb`.
+- For the notebook, the first few cells tried to clean the data and do simple visualization, and then we tried to build BoW and TF-IDF feature input from the cleaned data. Afterwards, you can uncomment/comment the SMOTE section to see the model performance before/after SMOTE algorithm. The rest of the cells are just trying to apply different models to train on the data set. Finally, each model will have its F-1 scores, accuracy and confusion matrix printed out.
 
 ## NN-models
 - The dataset can be found under `nn-models/data`.
